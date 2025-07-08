@@ -133,7 +133,7 @@ class Game {
     }
 
     start() {
-        setInterval(() => {this.#update()}, 1);
+        requestAnimationFrame(() => {this.#update()});
     }
 
     #drawLine(x1, y1, x2, y2) {
@@ -295,6 +295,8 @@ class Game {
                 this.#drawCross(figure.column, figure.row);
             }
         }
+        
+        requestAnimationFrame(() => {this.#update()});
 
         if (this.#gameState === GAME_STATE.PlAYING) {
             return;
@@ -302,6 +304,7 @@ class Game {
 
         this.#ctx.lineWidth = 10;
         this.#drawWinner();
+
     }
 }
 
