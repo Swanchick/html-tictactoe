@@ -33,12 +33,6 @@ const ALL_POSSIBLE_WINS = [
     new PossibleWin(2, 0, 1, 1, 0, 2),
 ];
 
-const ALL_CELLS = [
-    new PossibleWin(0, 0, 1, 0, 2, 0),
-    new PossibleWin(0, 1, 1, 1, 2, 1),
-    new PossibleWin(0, 2, 1, 2, 2, 2)
-];
-
 const CURRENT_PLAYER = {
     CROSS: 0,
     CIRCLE: 1,
@@ -123,7 +117,7 @@ class Game {
     }
 
     #placeCross(column, row) {
-        const figure = new Figure(CURRENT_PLAYER.CIRCLE, column, row);
+        const figure = new Figure(CURRENT_PLAYER.CROSS, column, row);
 
         this.#currentPlayer = CURRENT_PLAYER.CIRCLE;
 
@@ -131,7 +125,7 @@ class Game {
     }
 
     #placeCircle(column, row) {
-        const figure = new Figure(CURRENT_PLAYER.CROSS, column, row);
+        const figure = new Figure(CURRENT_PLAYER.CIRCLE, column, row);
 
         this.#currentPlayer = CURRENT_PLAYER.CROSS;
 
@@ -282,19 +276,9 @@ class Game {
             }
         }
 
-        for (const possibleDraw of ALL_CELLS) {
-            for (const pos of possibleDraw.allPos) {
-                const x = pos[0];
-                const y = pos[1];
-                
-                const figure = this.#getFigure(x, y);
-                if (figure === undefined) {
-                    return;
-                }
-            }
+        if (this.#figures.length === 9 && this.#gameState === GAME_STATE.PlAYING) {
+            this.#gameState = GAME_STATE.DRAW;
         }
-
-        this.#gameState = GAME_STATE.DRAW;
     }
 
     #update() {
